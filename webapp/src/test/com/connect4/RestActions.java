@@ -40,8 +40,8 @@ public class RestActions {
         return post(urlTemplate, null, ssoHeader(playerId));
     }
 
-    private HttpHeaders ssoHeader(int playerId) {
-        return httpHeader("sso", playerId);
+    public ResultActions postAs(String urlTemplate, Object requestBody, int playerId) {
+        return post(urlTemplate, requestBody, ssoHeader(playerId));
     }
 
     public ResultActions post(String urlTemplate, Object requestBody, HttpHeaders httpHeaders) {
@@ -50,6 +50,10 @@ public class RestActions {
                 .content(toJson(requestBody))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)));
+    }
+
+    private HttpHeaders ssoHeader(int playerId) {
+        return httpHeader("sso", playerId);
     }
 
     protected HttpHeaders httpHeader(String name, Object value) {

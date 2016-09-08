@@ -1,15 +1,18 @@
 package com.connect4.web.endpoints.games;
 
-import com.connect4.domain.Color;
 import com.connect4.domain.Game;
 import com.connect4.domain.Player;
 import com.connect4.domain.inmemory.InMemoryGame;
 import com.connect4.web.datastore.Repository;
+import com.connect4.web.endpoints.games.GameActionDtos.DropDiscActionDto;
+import com.connect4.web.endpoints.games.GameActionDtos.JoinGameActionDto;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -45,17 +48,18 @@ public class GameController {
         return toDto(repository.get(id));
     }
 
-    @RequestMapping(value = "/{id}/join/{color}", method = POST)
-    public GameDto joinGame(Player player, @PathVariable int id, @PathVariable Color color) {
+    @RequestMapping(value = "/{id}", params = "action=join", method = POST)
+    public GameDto joinGame(Player player, @PathVariable int id, @Valid @RequestBody JoinGameActionDto actionDto) {
         Game game = repository.get(id);
-        game.assignSlot(player, color);
+        game.assignSlot(player, actionDto.getColor());
         return toDto(game);
     }
 
-    @RequestMapping(value = "/{id}/dropDisc/{column}", method = POST)
-    public GameDto dropDisc(Player player, @PathVariable int id, @PathVariable int column) {
+
+    @RequestMapping(value = "/{id}", params = "action=dropDisc", method = POST)
+    public GameDto dropDisc(Player player, @PathVariable int id, @Valid @RequestBody DropDiscActionDto actionDto) {
         Game game = repository.get(id);
-        game.dropDisc(player, column);
+        game.dropDisc(player, actionDto.getColumn());
         return toDto(game);
     }
 

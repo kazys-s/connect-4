@@ -1,6 +1,8 @@
 package com.connect4;
 
 import com.connect4.domain.Color;
+import com.connect4.web.endpoints.games.GameActionDtos.DropDiscActionDto;
+import com.connect4.web.endpoints.games.GameActionDtos.JoinGameActionDto;
 import com.connect4.web.endpoints.games.GameDto;
 import com.connect4.web.endpoints.games.GameDto.SlotDto;
 import com.connect4.web.endpoints.players.PlayerDtos.PlayerDto;
@@ -45,7 +47,7 @@ public class GameActions extends RestActions {
     }
 
     public GameDto joinGame(GameDto game, PlayerDto player, Color color) {
-        ResultActions result = translateException(() -> postAs("/games/" + game.getId() + "/join/" + color, player.getId()).andExpect(status().isOk()));
+        ResultActions result = translateException(() -> postAs("/games/" + game.getId() + "?action=join", new JoinGameActionDto(color), player.getId()).andExpect(status().isOk()));
         GameDto dto = responseAs(result, GameDto.class);
         assertThat(dto.getSlots()).contains(new SlotDto(player.getId(), color));
         return dto;
@@ -59,7 +61,7 @@ public class GameActions extends RestActions {
     }
 
     public ResultActions tryDropDisc(GameDto game, PlayerDto player, int column) {
-        return postAs("/games/" + game.getId() + "/dropDisc/" + column, player.getId());
+        return postAs("/games/" + game.getId() + "?action=dropDisc", new DropDiscActionDto(column), player.getId());
     }
 
 
