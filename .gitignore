@@ -12,3 +12,10 @@
 hs_err_pid*
 
 .idea/*
+
+*.iml
+target
+domain/*.iml
+domain/target
+webapp/*.iml
+webapp/target
