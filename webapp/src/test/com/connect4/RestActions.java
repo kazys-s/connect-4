@@ -1,10 +1,13 @@
 package com.connect4;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -61,6 +64,13 @@ public class RestActions {
 
     protected <T> T responseAs(ResultActions result, Class<T> clazz) {
         return translateException(() -> objectMapper.readValue(result.andReturn().getResponse().getContentAsByteArray(), clazz));
+    }
+
+    protected <T> List<T> responseAsList(ResultActions result, Class<T> clazz) {
+        return translateException(() -> {
+            CollectionType valueType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
+            return objectMapper.readValue(result.andReturn().getResponse().getContentAsByteArray(), valueType);
+        });
     }
 
     protected <T> T translateException(CallableWithException<T> callable) {

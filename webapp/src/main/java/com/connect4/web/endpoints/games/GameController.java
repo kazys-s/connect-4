@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -30,6 +33,11 @@ public class GameController {
     @RequestMapping(method = POST)
     public GameDto createGame() {
         return toDto(repository.create(InMemoryGame::new));
+    }
+
+    @RequestMapping(method = GET)
+    public List<GameDto> listGames() {
+        return repository.findAll().map(this::toDto).collect(toList());
     }
 
     @RequestMapping(value = "/{id}", method = GET)

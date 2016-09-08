@@ -31,6 +31,12 @@ public class GameActions extends RestActions {
         return dto;
     }
 
+    public List<GameDto> listGames(PlayerDto player) {
+        ResultActions result = translateException(() -> getAs("/games", player.getId()).andExpect(status().isOk()));
+        List<GameDto> dtos = responseAsList(result, GameDto.class);
+        return dtos;
+    }
+
     public GameDto getGame(int gameId, PlayerDto player) {
         ResultActions result = translateException(() -> getAs("/games/" + gameId, player.getId()).andExpect(status().isOk()));
         GameDto dto = responseAs(result, GameDto.class);
@@ -55,6 +61,7 @@ public class GameActions extends RestActions {
     public ResultActions tryDropDisc(GameDto game, PlayerDto player, int column) {
         return postAs("/games/" + game.getId() + "/dropDisc/" + column, player.getId());
     }
+
 
     public GameDto dropDiscsInThisOrder(GameDto game, PlayerDto firstPlayer, List<Integer> firstPlayerMoves, PlayerDto secondPlayer, List<Integer> secondPlayerMoves) {
         IntStream.range(0, firstPlayerMoves.size()).forEach(i -> {
