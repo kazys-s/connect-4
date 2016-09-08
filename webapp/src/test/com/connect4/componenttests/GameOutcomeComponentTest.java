@@ -41,7 +41,7 @@ public class GameOutcomeComponentTest extends MvcTestBase {
         );
 
         // THEN my friend should be a winner
-        assertThat(game.getResult()).isEqualTo(new OutcomeDto(WIN, friend.getId()));
+        assertThat(game.getOutcome()).isEqualTo(new OutcomeDto(WIN, friend.getId()));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GameOutcomeComponentTest extends MvcTestBase {
         );
 
         // THEN my friend should be a winner
-        assertThat(game.getResult()).isEqualTo(new OutcomeDto(DRAW, null));
+        assertThat(game.getOutcome()).isEqualTo(new OutcomeDto(DRAW, null));
     }
 
     private GameDto startGameFor(String myself, String friend) {

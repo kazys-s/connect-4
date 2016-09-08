@@ -24,7 +24,7 @@ class GameDtoFactory {
         return GameDto.builder()
                 .id(id)
                 .status(state.getStatus())
-                .result(toOutcomeDto(state.getResult()))
+                .outcome(toOutcomeDto(state.getResult()))
                 .slots(toSlotDtos(state.getAllocatedSlots()))
                 .currentPlayer(state.getCurrentPlayer().isPresent() ? state.getCurrentPlayer().get().getId() : null)
                 .board(toBoard(state.getBoardSnapshot()))

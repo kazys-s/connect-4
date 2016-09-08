@@ -82,21 +82,21 @@ public class InMemoryGameTest {
     @Test
     public void resultShouldBeEmptyIfBoardHasNoResult() {
         allocatePlayers(PLAYER_A, PLAYER_B);
-        assertThat(game.getResult().isPresent()).isFalse();
+        assertThat(game.getOutcome().isPresent()).isFalse();
     }
 
     @Test
     public void resultShouldBeDrawIfBoardHasResultDraw() {
         allocatePlayers(PLAYER_A, PLAYER_B);
         when(board.getOutcome()).thenReturn(Optional.of(draw()));
-        assertThat(game.getResult()).isEqualTo(Optional.of(draw()));
+        assertThat(game.getOutcome()).isEqualTo(Optional.of(draw()));
     }
 
     @Test
     public void resultShouldBeWinIfBoardHasResultWin() {
         allocatePlayers(PLAYER_A, PLAYER_B);
         when(board.getOutcome()).thenReturn(Optional.of(win(Color.BLUE)));
-        assertThat(game.getResult()).isEqualTo(Optional.of(win(PLAYER_B)));
+        assertThat(game.getOutcome()).isEqualTo(Optional.of(win(PLAYER_B)));
     }
 
     @Test

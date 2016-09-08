@@ -75,7 +75,7 @@ public class InMemoryGame implements Game {
                 .allocatedSlots(slotAllocator.slotsWith((s) -> true).collect(toList()))
                 .currentPlayer(getStatus() == IN_PROGRESS ? Optional.of(currentPlayer.getPlayer()) : Optional.<Player>empty())
                 .status(getStatus())
-                .result(getResult())
+                .result(getOutcome())
                 .build();
     }
 
@@ -89,7 +89,7 @@ public class InMemoryGame implements Game {
         }
     }
 
-    public Optional<Outcome<Player>> getResult() {
+    public Optional<Outcome<Player>> getOutcome() {
         if (board.getOutcome().isPresent()) {
             Outcome<Color> outcome = board.getOutcome().get();
             Optional<Color> winningColor = outcome.getWinner();

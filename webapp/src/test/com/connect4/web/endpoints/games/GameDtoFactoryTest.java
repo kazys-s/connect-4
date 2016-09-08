@@ -59,19 +59,19 @@ public class GameDtoFactoryTest {
     @Test
     public void convertNoResult() {
         GameDto dto = toDto(validState.withResult(Optional.empty()));
-        assertThat(dto.getResult()).isEqualTo(null);
+        assertThat(dto.getOutcome()).isEqualTo(null);
     }
 
     @Test
     public void convertDraw() {
         GameDto dto = toDto(validState.withResult(Optional.of(Outcome.draw())));
-        assertThat(dto.getResult()).isEqualTo(new GameDto.OutcomeDto(DRAW, null));
+        assertThat(dto.getOutcome()).isEqualTo(new GameDto.OutcomeDto(DRAW, null));
     }
 
     @Test
     public void convertWin() {
         GameDto dto = toDto(validState.withResult(Optional.of(win(new Player(5, "Name")))));
-        assertThat(dto.getResult()).isEqualTo(new GameDto.OutcomeDto(WIN, 5));
+        assertThat(dto.getOutcome()).isEqualTo(new GameDto.OutcomeDto(WIN, 5));
     }
 
     @Test

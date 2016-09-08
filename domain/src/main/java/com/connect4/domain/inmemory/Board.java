@@ -18,14 +18,14 @@ class Board {
     private static final int NO_OF_DISKS_TO_CONNECT = 4;
 
     private final Color board[][] = new Color[NO_OF_ROWS][NO_OF_COLUMNS];
-    private final AtomicReference<Optional<Outcome<Color>>> result = new AtomicReference<>(Optional.empty());
+    private final AtomicReference<Optional<Outcome<Color>>> outcome = new AtomicReference<>(Optional.empty());
 
     synchronized Color[][] getBoardSnapshot() {
         return board;
     }
 
     Optional<Outcome<Color>> getOutcome() {
-        return result.get();
+        return outcome.get();
     }
 
     synchronized Board dropDisc(int column, @NonNull Color color) {
@@ -42,7 +42,7 @@ class Board {
         }
 
         int row = processDiskDrop(column, color);
-        result.set(resultAfterDrop(column, row));
+        outcome.set(outcomeAfterDrop(column, row));
         return this;
     }
 
@@ -53,7 +53,7 @@ class Board {
         return row;
     }
 
-    private Optional<Outcome<Color>> resultAfterDrop(int column, int row) {
+    private Optional<Outcome<Color>> outcomeAfterDrop(int column, int row) {
         if (isWin(column, row)) {
             return Optional.of(win(colorAt(column, row)));
         } else if (isDraw()) {

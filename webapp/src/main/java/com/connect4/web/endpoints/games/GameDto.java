@@ -21,7 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class GameDto {
     private int id;
     private Status status;
-    private OutcomeDto result;
+    private OutcomeDto outcome;
     private List<SlotDto> slots;
     private List<String> board;
     private Integer currentPlayer;
