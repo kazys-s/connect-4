@@ -26,15 +26,25 @@ printGameState
 
 
 status=NONE
-while  [ "$status" != next ]; do
+while true; do
 	echo Player 2:
 	read column
-	curl -X POST --silent --header 'Content-Type: application/json' --header "sso: $player2" --header 'Accept: application/json' -d "{ \"column\": $column }" $host/games/$game?action=dropDisc > /dev/null
+	status=$(curl -X POST --silent --header 'Content-Type: application/json' --header "sso: $player2" --header 'Accept: application/json' -d "{ \"column\": $column }" $host/games/$game?action=dropDisc | jq ".status")
 	printGameState
+	
+	if [ "$status" == '"FINISHED"' ] 
+	then 
+		break
+	fi
 
 	echo Player 1:
 	read column
-	curl -X POST --silent --header 'Content-Type: application/json' --header "sso: $player1" --header 'Accept: application/json' -d "{ \"column\": $column }" $host/games/$game?action=dropDisc > /dev/null
-	printGameState
+	status=$(curl -X POST --silent --header 'Content-Type: application/json' --header "sso: $player1" --header 'Accept: application/json' -d "{ \"column\": $column }" $host/games/$game?action=dropDisc  | jq ".status")
+	printGameState	
+	
+	if [ "$status" == '"FINISHED"' ] 
+	then 
+		break
+	fi
 done
 
