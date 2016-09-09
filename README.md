@@ -6,6 +6,8 @@
 mvn package && java -jar webapp/target/webapp-1.0.0-SNAPSHOT.jar
 ```
 
+**NOTICE:** when viewing the code in IDE please use Lombok plugin to have all the getters/setters generated
+
 ## Service endpoints
 
 ### Player endpoints
