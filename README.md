@@ -56,7 +56,7 @@ Endpoints share the same response object:
 }
 ```
 
-#### POST /games - create a new player
+#### POST /games - create new game
 #### GET /games - list all games
 #### GET /games/:id - get particular game
 #### POST /games/:id?action=join - join game
